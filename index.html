@@ -8,7 +8,15 @@
   	<link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-  	<div class="board" id="board">
+
+    <div class="screen screen-start" id="start">
+      <header>
+        <h1>Tic Tac Toe</h1>
+        <a href="#" class="button">Start game</a>
+      </header>
+    </div>
+
+  	<div class="board hidden" id="board">
       <header>
         <h1>Tic Tac Toe</h1>
         <ul>
@@ -32,6 +40,15 @@
         <li class="box"></li>
       </ul>
     </div>
+
+    <div class="screen screen-win hidden" id="finish">
+      <header>
+        <h1>Tic Tac Toe</h1>
+        <p class="message"></p>
+        <a href="#" class="button">New game</a>
+      </header>
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/app.js"></script>
   </body>

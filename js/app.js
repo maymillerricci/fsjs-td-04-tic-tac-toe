@@ -2,9 +2,6 @@
 
 // * use module pattern
 
-// on page load, show start.txt markup
-// add to html, hide the rest
-
 // on click start
 // hide start, show board
 
