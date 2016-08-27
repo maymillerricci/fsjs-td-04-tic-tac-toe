@@ -8,6 +8,37 @@ var ticTacToe = (function() {
     $("#board").removeClass("hidden");
   });
 
+  var playerNumber = 1;
+  $("#player" + playerNumber).addClass("active");
+
+  $(".box").on("mouseenter", function() {
+    if (!($(this).hasClass("filled"))) {
+      $(this).addClass("hover-" + playerNumber);
+    }
+  })
+
+  $(".box").on("mouseleave", function() {
+    $(this).removeClass("hover-" + playerNumber);
+  })
+
+  $(".box").on("click", function() {
+    if (!($(this).hasClass("filled"))) {
+      $(this).addClass("filled").addClass("box-filled-" + playerNumber);
+      playerNumber = switchPlayer(playerNumber);
+      $(".players").removeClass("active");
+      $("#player" + playerNumber).addClass("active");
+    }
+  })
+
+  function switchPlayer(playerNumber) {
+    if (playerNumber === 1) {
+      return 2;
+    }
+    else {
+      return 1;
+    }
+  }
+
   // o goes first
   // maybe: next game winner goes first?
   // o is highlighted

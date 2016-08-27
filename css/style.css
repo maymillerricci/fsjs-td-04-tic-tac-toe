@@ -141,3 +141,13 @@ h1 {
 .hidden {
   display: none;
 }
+
+.boxes .box.hover-1 {
+  background-image: url(../img/o.svg);
+}
+
+.boxes .box.hover-2 {
+  background-image: url(../img/x.svg);
+}
+
+
