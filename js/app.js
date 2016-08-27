@@ -1,6 +1,6 @@
-"use strict"
-
 var ticTacToe = (function() {
+  "use strict"
+
   // on click start button, hide start page and show board
   $("#start-game").on("click", function(e) {
     e.preventDefault();
@@ -8,30 +8,26 @@ var ticTacToe = (function() {
     $("#board").removeClass("hidden");
   });
 
-  var playerNumber = 1;
-  $("#player" + playerNumber).addClass("active");
+  // instantiate game object starting with player 1
+  var game = new Game(1);
 
-  $(".box").on("mouseenter", function() {
-    if (!($(this).hasClass("filled"))) {
-      $(this).addClass("hover-" + playerNumber);
-    }
-  })
+  // game object constructor
+  function Game(playerNumber) {
+    this.playerNumber = playerNumber;
+    $("#player" + this.playerNumber).addClass("active");
+  }
 
-  $(".box").on("mouseleave", function() {
-    $(this).removeClass("hover-" + playerNumber);
-  })
+  // fill in square with x/o, switch player, adjust header to show new player's turn
+  Game.prototype.playTurn = function(clickedBox) {
+    clickedBox.addClass("filled").addClass("box-filled-" + this.playerNumber);
+    this.playerNumber = this.switchPlayer();
+    $(".players").removeClass("active");
+    $("#player" + this.playerNumber).addClass("active");
+  }
 
-  $(".box").on("click", function() {
-    if (!($(this).hasClass("filled"))) {
-      $(this).addClass("filled").addClass("box-filled-" + playerNumber);
-      playerNumber = switchPlayer(playerNumber);
-      $(".players").removeClass("active");
-      $("#player" + playerNumber).addClass("active");
-    }
-  })
-
-  function switchPlayer(playerNumber) {
-    if (playerNumber === 1) {
+  // switch between player 1 and 2
+  Game.prototype.switchPlayer = function() {
+    if (this.playerNumber === 1) {
       return 2;
     }
     else {
@@ -39,13 +35,28 @@ var ticTacToe = (function() {
     }
   }
 
-  // o goes first
+  // show light x/o over square if not filled on hover
+  $(".box").on("mouseenter", function() {
+    if (!($(this).hasClass("filled"))) {
+      $(this).addClass("hover-" + game.playerNumber);
+    }
+  })
+
+  // remove x/o on stop hovering
+  $(".box").on("mouseleave", function() {
+    $(this).removeClass("hover-" + game.playerNumber);
+  })
+
+  // play turn on click a square if not filled
+  $(".box").on("click", function() {
+    if (!($(this).hasClass("filled"))) {
+      game.playTurn($(this));
+    }
+  });
+
+
+
   // maybe: next game winner goes first?
-  // o is highlighted
-  // hover is o shaped over spaces
-  // on click square, if empty, square fills with solid o
-  // then x's turn...
-  // method for playing a turn, pass in x/o
 
   // alternate playing turns until 3 in a row, or board filled
 
