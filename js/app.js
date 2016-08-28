@@ -41,10 +41,17 @@ var ticTacToe = (function() {
   Game.prototype.checkForWin = function() {
     var xsOs = game.getXsOs();
     var winner = game.check3InARow(xsOs.oIndexes, xsOs.xIndexes)
+    
+    if (winner) {
+      $("#board").addClass("hidden");
+      $("#finish").removeClass("hidden");
+      $(".message").text("Winner");
+    }
+
     if (winner === "o") {
-      alert("o wins");
+      $("#finish").addClass("screen-win-one");
     } else if (winner === "x") {
-      alert("x wins");
+      $("#finish").addClass("screen-win-two");
     }
   }
 
