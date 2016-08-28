@@ -15,12 +15,14 @@ var ticTacToe = (function() {
   function Game(playerNumber) {
     this.playerNumber = playerNumber;
     $("#player" + this.playerNumber).addClass("active");
+    this.winningIndexes = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
   }
 
   // fill in square with x/o, switch player, adjust header to show new player's turn
   Game.prototype.playTurn = function(clickedBox) {
     clickedBox.addClass("filled").addClass("box-filled-" + this.playerNumber);
     this.playerNumber = this.switchPlayer();
+    game.checkForWin();
     $(".players").removeClass("active");
     $("#player" + this.playerNumber).addClass("active");
   }
@@ -33,6 +35,47 @@ var ticTacToe = (function() {
     else {
       return 1;
     }
+  }
+
+  // determine if o or x has won the game
+  Game.prototype.checkForWin = function() {
+    var xsOs = game.getXsOs();
+    var winner = game.check3InARow(xsOs.oIndexes, xsOs.xIndexes)
+    if (winner === "o") {
+      alert("o wins");
+    } else if (winner === "x") {
+      alert("x wins");
+    }
+  }
+
+  // return arrays for o and x of the indexes of the boxes they have filled in
+  Game.prototype.getXsOs = function() {
+    var oIndexes = [];
+    var xIndexes = [];
+    $(".box").each(function(i) {
+      if ($(this).hasClass("box-filled-1")) {
+        oIndexes.push(i);
+      } else if ($(this).hasClass("box-filled-2")) {
+        xIndexes.push(i);
+      }
+    });
+    return {oIndexes: oIndexes, xIndexes: xIndexes};
+  }
+
+  // for each set of winning indexes, check if o or x has them all filled in
+  Game.prototype.check3InARow = function(oIndexes, xIndexes) {
+    for (var i = 0; i < this.winningIndexes.length; i++) {
+      if (arrayIsSubset(this.winningIndexes[i], oIndexes)) {
+        return "o";
+      } else if (arrayIsSubset(this.winningIndexes[i], xIndexes)) {
+        return "x";
+      }
+    }
+  }
+
+  // check if all items in subset array are in larger array 
+  function arrayIsSubset(subsetArray, largeArray) {
+    return subsetArray.every(function(val) { return largeArray.indexOf(val) >= 0 });
   }
 
   // show light x/o over square if not filled on hover
