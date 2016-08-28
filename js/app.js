@@ -37,27 +37,20 @@ var ticTacToe = (function() {
     }
   }
 
-  // determine if o or x has won the game
+  // determine if o or x has won the game, if so show win screen
+  // if all squares filled and no winner, show tie screen
   Game.prototype.checkForWin = function() {
     var xsOs = game.getXsOs();
     var winner = game.check3InARow(xsOs.oIndexes, xsOs.xIndexes)
     
-    if (winner) {
-      $("#board").addClass("hidden");
-      $("#finish").removeClass("hidden");
-      $(".message").text("Winner");
-      
-      if (winner === "o") {
-        $("#finish").addClass("screen-win-one");
-      } else if (winner === "x") {
-        $("#finish").addClass("screen-win-two");
-      }
+    if (winner === "o") {
+      game.finishGame("screen-win-one", "Winner");
+    } else if (winner === "x") {
+      game.finishGame("screen-win-two", "Winner");
     }
 
     if (xsOs.oIndexes.length + xsOs.xIndexes.length === 9) {
-      $("#board").addClass("hidden");
-      $("#finish").removeClass("hidden").addClass("screen-win-tie");
-      $(".message").text("It's a Tie!");
+      game.finishGame("screen-win-tie", "It's a Tie!");
     }
   }
 
@@ -84,6 +77,13 @@ var ticTacToe = (function() {
         return "x";
       }
     }
+  }
+
+  // hide board and show win screen with passed in css class and message
+  Game.prototype.finishGame = function(cssClass, message) {
+    $("#board").addClass("hidden");
+    $("#finish").removeClass("hidden").addClass(cssClass);
+    $(".message").text(message);
   }
 
   // check if all items in subset array are in larger array 
