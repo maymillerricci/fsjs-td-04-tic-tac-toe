@@ -46,12 +46,18 @@ var ticTacToe = (function() {
       $("#board").addClass("hidden");
       $("#finish").removeClass("hidden");
       $(".message").text("Winner");
+      
+      if (winner === "o") {
+        $("#finish").addClass("screen-win-one");
+      } else if (winner === "x") {
+        $("#finish").addClass("screen-win-two");
+      }
     }
 
-    if (winner === "o") {
-      $("#finish").addClass("screen-win-one");
-    } else if (winner === "x") {
-      $("#finish").addClass("screen-win-two");
+    if (xsOs.oIndexes.length + xsOs.xIndexes.length === 9) {
+      $("#board").addClass("hidden");
+      $("#finish").removeClass("hidden").addClass("screen-win-tie");
+      $(".message").text("It's a Tie!");
     }
   }
 
