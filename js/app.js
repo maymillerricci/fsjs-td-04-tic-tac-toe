@@ -23,6 +23,25 @@ var ticTacToe = (function() {
     game = new Game(1);
   });
 
+  // show light x/o over square if not filled on hover
+  $(".box").on("mouseenter", function() {
+    if (!($(this).hasClass("filled"))) {
+      $(this).addClass("hover-" + game.playerNumber);
+    }
+  })
+
+  // remove x/o on stop hovering
+  $(".box").on("mouseleave", function() {
+    $(this).removeClass("hover-1").removeClass("hover-2");
+  })
+
+  // play turn on click a square if not filled
+  $(".box").on("click", function() {
+    if (!($(this).hasClass("filled"))) {
+      game.playTurn($(this));
+    }
+  });
+
   // game object constructor
   function Game(playerNumber) {
     this.playerNumber = playerNumber;
@@ -47,13 +66,6 @@ var ticTacToe = (function() {
     else {
       return 1;
     }
-  }
-
-  // reset game board
-  Game.prototype.resetBoard = function() {
-    $(".players").removeClass("active");
-    $(".box").removeClass("filled").removeClass("box-filled-1").removeClass("box-filled-2");
-    $("#finish").removeClass("screen-win-one").removeClass("screen-win-two").removeClass("screen-win-tie");
   }
 
   // determine if o or x has won the game, if so show win screen
@@ -105,29 +117,19 @@ var ticTacToe = (function() {
     $(".message").text(message);
   }
 
+  // reset game board
+  Game.prototype.resetBoard = function() {
+    $(".players").removeClass("active");
+    $(".box").removeClass("filled").removeClass("box-filled-1").removeClass("box-filled-2");
+    $("#finish").removeClass("screen-win-one").removeClass("screen-win-two").removeClass("screen-win-tie");
+  }
+
   // check if all items in subset array are in larger array 
   function arrayIsSubset(subsetArray, largeArray) {
     return subsetArray.every(function(val) { return largeArray.indexOf(val) >= 0 });
   }
 
-  // show light x/o over square if not filled on hover
-  $(".box").on("mouseenter", function() {
-    if (!($(this).hasClass("filled"))) {
-      $(this).addClass("hover-" + game.playerNumber);
-    }
-  })
 
-  // remove x/o on stop hovering
-  $(".box").on("mouseleave", function() {
-    $(this).removeClass("hover-1").removeClass("hover-2");
-  })
-
-  // play turn on click a square if not filled
-  $(".box").on("click", function() {
-    if (!($(this).hasClass("filled"))) {
-      game.playTurn($(this));
-    }
-  });
 
 
 
