@@ -83,13 +83,13 @@ var ticTacToe = (function() {
     var winner = this.check3InARow(xsOs.oIndexes, xsOs.xIndexes)
     
     if (winner === "o") {
-      this.finishGame("screen-win-one", "Winner");
+      this.finishGame("screen-win-one", this.player1 + " is the winner!");
     } else if (winner === "x") {
-      this.finishGame("screen-win-two", "Winner");
+      this.finishGame("screen-win-two", this.player2 + " is the winner!");
     }
 
     if (xsOs.oIndexes.length + xsOs.xIndexes.length === 9) {
-      this.finishGame("screen-win-tie", "It's a Tie!");
+      this.finishGame("screen-win-tie", "It's a tie!");
     }
   }
 
