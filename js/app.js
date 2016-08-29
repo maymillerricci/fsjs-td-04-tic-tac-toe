@@ -47,6 +47,12 @@ var ticTacToe = (function() {
     this.playerNumber = playerNumber;
     $("#player" + this.playerNumber).addClass("active");
     this.winningIndexes = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+    this.player1 = prompt("Player 1, enter your name:");
+    this.player2 = prompt("Player 2, enter your name:");
+    $("#board header").after("<div class='name name-player-1'>" + this.player1 + "</div>");
+    $("#board header").after("<div class='name name-player-2'>" + this.player2 + "</div>");
+    $(".name-player-" + this.playerNumber).addClass("active");
   }
 
   // fill in square with x/o, switch player, adjust header to show new player's turn
@@ -56,6 +62,8 @@ var ticTacToe = (function() {
     this.checkForWin();
     $(".players").removeClass("active");
     $("#player" + this.playerNumber).addClass("active");
+    $(".name").removeClass("active");
+    $(".name-player-" + this.playerNumber).addClass("active");
   }
 
   // switch between player 1 and 2
@@ -122,6 +130,7 @@ var ticTacToe = (function() {
     $(".players").removeClass("active");
     $(".box").removeClass("filled").removeClass("box-filled-1").removeClass("box-filled-2");
     $("#finish").removeClass("screen-win-one").removeClass("screen-win-two").removeClass("screen-win-tie");
+    $(".name").remove();
   }
 
   // check if all items in subset array are in larger array 

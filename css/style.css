@@ -150,4 +150,26 @@ h1 {
   background-image: url(../img/x.svg);
 }
 
+.name {
+  margin-top: 15px;
+  font-size: 2em;
+  color: #909090;
+}
 
+.name-player-1 {
+  margin-left: 2.5%;
+  float: left;
+}
+
+.name-player-2 {
+  margin-right: 2.5%;
+  float: right;
+}
+
+.name-player-1.active {
+  color: #FFA000;
+}
+
+.name-player-2.active {
+  color: #3688C3;
+}
