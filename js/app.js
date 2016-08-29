@@ -38,7 +38,7 @@ var ticTacToe = (function() {
   // play turn on click a square if not filled
   $(".box").on("click", function() {
     if (!($(this).hasClass("filled"))) {
-      game.playTurn($(this));
+      game.playHumanTurn($(this));
     }
   });
 
@@ -49,20 +49,45 @@ var ticTacToe = (function() {
     this.winningIndexes = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 
     this.player1 = prompt("Player 1, enter your name:");
-    this.player2 = prompt("Player 2, enter your name:");
+    this.player2 = prompt("Player 2, enter your name, or to play against the computer type Computer:");
     $("#board header").after("<div class='name name-player-1'>" + this.player1 + "</div>");
     $("#board header").after("<div class='name name-player-2'>" + this.player2 + "</div>");
     $(".name-player-" + this.playerNumber).addClass("active");
+
+    if (this.player2.toLowerCase() === "computer") {
+      this.mode = "computer";
+    }
   }
 
-  // fill in square with x/o, switch player, adjust header to show new player's turn
-  Game.prototype.playTurn = function(clickedBox) {
+  // fill in square with x/o of clicked box and finish turn 
+  // if in play against computer mode and it's the computer's turn, computer plays its turn
+  Game.prototype.playHumanTurn = function(clickedBox) {
     clickedBox.addClass("filled").addClass("box-filled-" + this.playerNumber);
-    this.playerNumber = this.switchPlayer();
+
+    this.finishTurn();
+
+    if (this.mode === "computer" && this.playerNumber === 2) {
+      this.playComputerTurn();
+    }
+  }
+
+  // computer fills in random unfilled box and finishes turn
+  Game.prototype.playComputerTurn = function() {
+    var unfilledBoxes = $(".box:not(.filled)");
+    var boxToFill = getRandomElement(unfilledBoxes);
+    $(boxToFill).addClass("filled").addClass("box-filled-" + this.playerNumber);
+
+    this.finishTurn();
+  }
+
+  // check for win, switch players, remove active classes, 
+  // and set active classes to indicate next player's turn
+  Game.prototype.finishTurn = function() {
     this.checkForWin();
+    this.playerNumber = this.switchPlayer();
     $(".players").removeClass("active");
-    $("#player" + this.playerNumber).addClass("active");
     $(".name").removeClass("active");
+    $("#player" + this.playerNumber).addClass("active");
     $(".name-player-" + this.playerNumber).addClass("active");
   }
 
@@ -136,5 +161,11 @@ var ticTacToe = (function() {
   // check if all items in subset array are in larger array 
   function arrayIsSubset(subsetArray, largeArray) {
     return subsetArray.every(function(val) { return largeArray.indexOf(val) >= 0 });
+  }
+
+  // get random element from array of objects
+  function getRandomElement(objects) {
+    var randomNumber = Math.floor(Math.random() * objects.length);
+    return objects[randomNumber];
   }
 }());
