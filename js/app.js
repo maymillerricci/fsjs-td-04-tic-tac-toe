@@ -1,5 +1,5 @@
 var ticTacToe = (function() {
-  "use strict"
+  "use strict";
  
    var game;
 
@@ -28,12 +28,12 @@ var ticTacToe = (function() {
     if (!($(this).hasClass("filled"))) {
       $(this).addClass("hover-" + game.playerNumber);
     }
-  })
+  });
 
   // remove x/o on stop hovering
   $(".box").on("mouseleave", function() {
     $(this).removeClass("hover-1").removeClass("hover-2");
-  })
+  });
 
   // play turn on click a square if not filled
   $(".box").on("click", function() {
@@ -69,7 +69,7 @@ var ticTacToe = (function() {
     if (this.mode === "computer" && this.playerNumber === 2) {
       this.playComputerTurn();
     }
-  }
+  };
 
   // computer fills in random unfilled box and finishes turn
   Game.prototype.playComputerTurn = function() {
@@ -78,7 +78,7 @@ var ticTacToe = (function() {
     $(boxToFill).addClass("filled").addClass("box-filled-" + this.playerNumber);
 
     this.finishTurn();
-  }
+  };
 
   // check for win, switch players, remove active classes, 
   // and set active classes to indicate next player's turn
@@ -89,7 +89,7 @@ var ticTacToe = (function() {
     $(".name").removeClass("active");
     $("#player" + this.playerNumber).addClass("active");
     $(".name-player-" + this.playerNumber).addClass("active");
-  }
+  };
 
   // switch between player 1 and 2
   Game.prototype.switchPlayer = function() {
@@ -99,13 +99,13 @@ var ticTacToe = (function() {
     else {
       return 1;
     }
-  }
+  };
 
   // determine if o or x has won the game, if so show win screen
   // if all squares filled and no winner, show tie screen
   Game.prototype.checkForWin = function() {
     var xsOs = this.getXsOs();
-    var winner = this.check3InARow(xsOs.oIndexes, xsOs.xIndexes)
+    var winner = this.check3InARow(xsOs.oIndexes, xsOs.xIndexes);
     
     if (winner === "o") {
       this.finishGame("screen-win-one", this.player1 + " is the winner!");
@@ -114,7 +114,7 @@ var ticTacToe = (function() {
     } else if (xsOs.oIndexes.length + xsOs.xIndexes.length === 9) {
       this.finishGame("screen-win-tie", "It's a tie!");
     }
-  }
+  };
 
   // return arrays for o and x of the indexes of the boxes they have filled in
   Game.prototype.getXsOs = function() {
@@ -128,7 +128,7 @@ var ticTacToe = (function() {
       }
     });
     return {oIndexes: oIndexes, xIndexes: xIndexes};
-  }
+  };
 
   // for each set of winning indexes, check if o or x has them all filled in
   Game.prototype.check3InARow = function(oIndexes, xIndexes) {
@@ -139,14 +139,14 @@ var ticTacToe = (function() {
         return "x";
       }
     }
-  }
+  };
 
   // hide board and show finish win/tie screen with passed in css class and message
   Game.prototype.finishGame = function(cssClass, message) {
     $("#board").addClass("hidden");
     $("#finish").removeClass("hidden").addClass(cssClass);
     $(".message").text(message);
-  }
+  };
 
   // reset game board
   Game.prototype.resetBoard = function() {
@@ -154,11 +154,11 @@ var ticTacToe = (function() {
     $(".box").removeClass("filled").removeClass("box-filled-1").removeClass("box-filled-2");
     $("#finish").removeClass("screen-win-one").removeClass("screen-win-two").removeClass("screen-win-tie");
     $(".name").remove();
-  }
+  };
 
   // check if all items in subset array are in larger array 
   function arrayIsSubset(subsetArray, largeArray) {
-    return subsetArray.every(function(val) { return largeArray.indexOf(val) >= 0 });
+    return subsetArray.every(function(val) { return largeArray.indexOf(val) >= 0; });
   }
 
   // get random element from array of objects
