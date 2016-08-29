@@ -111,9 +111,7 @@ var ticTacToe = (function() {
       this.finishGame("screen-win-one", this.player1 + " is the winner!");
     } else if (winner === "x") {
       this.finishGame("screen-win-two", this.player2 + " is the winner!");
-    }
-
-    if (xsOs.oIndexes.length + xsOs.xIndexes.length === 9) {
+    } else if (xsOs.oIndexes.length + xsOs.xIndexes.length === 9) {
       this.finishGame("screen-win-tie", "It's a tie!");
     }
   }
