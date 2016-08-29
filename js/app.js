@@ -1,15 +1,27 @@
 var ticTacToe = (function() {
   "use strict"
+ 
+   var game;
 
   // on click start button, hide start page and show board
   $("#start-game").on("click", function(e) {
     e.preventDefault();
     $("#start").addClass("hidden");
     $("#board").removeClass("hidden");
+    
+    // instantiate game object starting with player 1
+    game = new Game(1);
   });
 
-  // instantiate game object starting with player 1
-  var game = new Game(1);
+  // on click new game button, hide finish page and reset game
+  $("#new-game").on("click", function(e) {
+    e.preventDefault();
+    $("#finish").addClass("hidden");
+    $("#board").removeClass("hidden");
+    
+    game.resetBoard();
+    game = new Game(1);
+  });
 
   // game object constructor
   function Game(playerNumber) {
@@ -35,6 +47,13 @@ var ticTacToe = (function() {
     else {
       return 1;
     }
+  }
+
+  // reset game board
+  Game.prototype.resetBoard = function() {
+    $(".players").removeClass("active");
+    $(".box").removeClass("filled").removeClass("box-filled-1").removeClass("box-filled-2");
+    $("#finish").removeClass("screen-win-one").removeClass("screen-win-two").removeClass("screen-win-tie");
   }
 
   // determine if o or x has won the game, if so show win screen
@@ -79,7 +98,7 @@ var ticTacToe = (function() {
     }
   }
 
-  // hide board and show win screen with passed in css class and message
+  // hide board and show finish win/tie screen with passed in css class and message
   Game.prototype.finishGame = function(cssClass, message) {
     $("#board").addClass("hidden");
     $("#finish").removeClass("hidden").addClass(cssClass);
@@ -100,7 +119,7 @@ var ticTacToe = (function() {
 
   // remove x/o on stop hovering
   $(".box").on("mouseleave", function() {
-    $(this).removeClass("hover-" + game.playerNumber);
+    $(this).removeClass("hover-1").removeClass("hover-2");
   })
 
   // play turn on click a square if not filled
