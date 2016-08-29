@@ -53,7 +53,7 @@ var ticTacToe = (function() {
   Game.prototype.playTurn = function(clickedBox) {
     clickedBox.addClass("filled").addClass("box-filled-" + this.playerNumber);
     this.playerNumber = this.switchPlayer();
-    game.checkForWin();
+    this.checkForWin();
     $(".players").removeClass("active");
     $("#player" + this.playerNumber).addClass("active");
   }
@@ -71,17 +71,17 @@ var ticTacToe = (function() {
   // determine if o or x has won the game, if so show win screen
   // if all squares filled and no winner, show tie screen
   Game.prototype.checkForWin = function() {
-    var xsOs = game.getXsOs();
-    var winner = game.check3InARow(xsOs.oIndexes, xsOs.xIndexes)
+    var xsOs = this.getXsOs();
+    var winner = this.check3InARow(xsOs.oIndexes, xsOs.xIndexes)
     
     if (winner === "o") {
-      game.finishGame("screen-win-one", "Winner");
+      this.finishGame("screen-win-one", "Winner");
     } else if (winner === "x") {
-      game.finishGame("screen-win-two", "Winner");
+      this.finishGame("screen-win-two", "Winner");
     }
 
     if (xsOs.oIndexes.length + xsOs.xIndexes.length === 9) {
-      game.finishGame("screen-win-tie", "It's a Tie!");
+      this.finishGame("screen-win-tie", "It's a Tie!");
     }
   }
 
