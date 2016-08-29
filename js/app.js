@@ -128,21 +128,4 @@ var ticTacToe = (function() {
   function arrayIsSubset(subsetArray, largeArray) {
     return subsetArray.every(function(val) { return largeArray.indexOf(val) >= 0 });
   }
-
-
-
-
-
-  // maybe: next game winner goes first?
-
-  // alternate playing turns until 3 in a row, or board filled
-
-  // at the end of each turn, check for 3 in a row
-  // if winner, end game
-  // else next turn
-
-  // if winner, end game = o winner view or x winner view
-  // if tie, tie view
-  // on click new game button, starts it all over again
-
 }());
